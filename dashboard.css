@@ -811,11 +811,23 @@ p {
   transform: translate(-50%, 0);
 }
 
-/* ===== Larger screens ===== */
-@media (min-width: 640px) {
-  .sheet,
-  .hero {
-    padding-left: 2rem;
-    padding-right: 2rem;
+/* ===== Desktop: keep the mobile layout centered ===== */
+@media (min-width: 481px) {
+  html {
+    background: #e6e0ef;
+  }
+
+  body {
+    max-width: 430px;
+    margin: 0 auto;
+    box-shadow: 0 0 40px rgba(28, 11, 59, 0.15);
+  }
+
+  .bottom-nav {
+    left: 50%;
+    right: auto;
+    width: 100%;
+    max-width: 430px;
+    transform: translateX(-50%);
   }
 }

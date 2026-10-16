@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="hero">
+    <div class="topbar">
+      <button class="icon-btn" id="notif-btn" aria-label="Notifications">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="notif-dot show" id="notif-dot"></span>
+      </button>
+      <div class="avatar">
+        <span class="material-symbols-outlined">person</span>
+      </div>
+    </div>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <svg class="wave" fill="none" preserveAspectRatio="none" viewBox="0 0 375 48">
+      <path d="M0 24C90 42 180 8 270 24C315 32 350 20 375 14V48H0V24Z" fill="currentColor"></path>
+    </svg>
+
+    <div class="hero-title">
+      <h1>Dashboard</h1>
+    </div>
+  </header>
+
+  <main class="sheet">
+    <div class="stack">
+
+      <!-- Total spent -->
+      <section class="card">
+        <div class="card-head">
+          <span class="label-sm eyebrow">Total Spent This Month</span>
+          <button class="eye-btn" id="toggle-balance-btn" aria-label="Toggle amount visibility">
+            <span class="material-symbols-outlined" id="eye-icon">visibility</span>
+          </button>
+        </div>
+
+        <div class="balance">
+          <span class="balance-amount" id="balance-display">$2,450.00</span>
+          <span class="balance-currency">USD</span>
+        </div>
+
+        <div class="quick-actions">
+          <button class="quick-btn" data-action="add">
+            <div class="quick-icon"><span class="material-symbols-outlined">add</span></div>
+            <span class="label-sm quick-label truncate">Add</span>
+          </button>
+          <button class="quick-btn" data-action="category">
+            <div class="quick-icon"><span class="material-symbols-outlined">grid_view</span></div>
+            <span class="label-sm quick-label truncate">Category</span>
+          </button>
+          <button class="quick-btn" data-action="budget">
+            <div class="quick-icon"><span class="material-symbols-outlined">account_balance_wallet</span></div>
+            <span class="label-sm quick-label truncate">Budget</span>
+          </button>
+          <button class="quick-btn" data-action="insights">
+            <div class="quick-icon"><span class="material-symbols-outlined">trending_up</span></div>
+            <span class="label-sm quick-label truncate">Insights</span>
+          </button>
+        </div>
+
+        <button class="primary-btn" id="add-expense-btn">
+          <span class="material-symbols-outlined">add_circle</span>
+          <span>Add Expense</span>
+        </button>
+      </section>
+
+      <!-- Spending overview -->
+      <section class="card">
+        <div class="card-head">
+          <h2 class="card-title">Spending Overview</h2>
+          <div class="chip label-sm">This Week</div>
+        </div>
+        <div class="chart" id="chart"></div>
+      </section>
+
+      <!-- Smart feedback -->
+      <section class="feedback">
+        <div class="feedback-head">
+          <span class="material-symbols-outlined">auto_awesome</span>
+          <h2 class="card-title">Smart Feedback</h2>
+        </div>
+        <div class="feedback-list">
+          <div class="feedback-card">
+            <div class="feedback-icon"><span class="material-symbols-outlined">restaurant</span></div>
+            <div class="feedback-body">
+              <div class="feedback-meta">
+                <span class="badge label-sm" id="food-badge">+18%</span>
+                <span class="meta-text">vs last week</span>
+              </div>
+              <p class="feedback-text truncate" id="food-text">You spent 18% more on food this week</p>
+            </div>
+          </div>
+
+          <div class="feedback-card" id="budget-card">
+            <div class="feedback-icon"><span class="material-symbols-outlined">savings</span></div>
+            <div class="feedback-body">
+              <div class="feedback-meta">
+                <span class="badge label-sm" id="budget-badge">Safe Zone</span>
+                <span class="meta-text" id="budget-sub">Target on track</span>
+              </div>
+              <p class="feedback-text truncate" id="budget-text">You are $120 under your monthly budget</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent expenses -->
+      <section class="card recent">
+        <div class="card-head">
+          <h2 class="card-title">Recent Expenses</h2>
+          <button class="link-pill label-sm" id="see-all-btn">
+            <span>All</span>
+            <span class="material-symbols-outlined">chevron_right</span>
+          </button>
+        </div>
+        <div class="expense-list" id="expense-list"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav">
+    <div class="nav-row">
+      <a href="#" class="nav-item active" data-path="dashboard" aria-current="page">
+        <span class="material-symbols-outlined">home</span>
+        <span class="label-sm">Home</span>
+      </a>
+      <a href="#" class="nav-item" data-path="transactions">
+        <span class="material-symbols-outlined">receipt_long</span>
+        <span class="label-sm">Transact</span>
+      </a>
+      <a href="#" class="nav-item" data-path="insights">
+        <span class="material-symbols-outlined">insights</span>
+        <span class="label-sm">Insights</span>
+      </a>
+      <a href="#" class="nav-item" data-path="budget">
+        <span class="material-symbols-outlined">account_balance_wallet</span>
+        <span class="label-sm">Budget</span>
+      </a>
+      <a href="#" class="nav-item" data-path="profile">
+        <span class="material-symbols-outlined">person</span>
+        <span class="label-sm">Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Add expense sheet -->
+  <div class="overlay" id="overlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-head">
+        <h2 class="card-title" id="modal-title">Add Expense</h2>
+        <button class="eye-btn" id="close-modal" aria-label="Close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="field">
+        <label class="label-sm" for="exp-name">Name</label>
+        <input id="exp-name" type="text" placeholder="e.g. Lunch" maxlength="40" autocomplete="off">
+      </div>
+      <div class="field">
+        <label class="label-sm" for="exp-amount">Amount (USD)</label>
+        <input id="exp-amount" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00">
+      </div>
+      <div class="field">
+        <label class="label-sm" for="exp-category">Category</label>
+        <select id="exp-category">
+          <option value="Food">Food</option>
+          <option value="Groceries">Groceries</option>
+          <option value="Transport">Transport</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Coffee">Coffee &amp; Snack</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <p class="field-error" id="form-error"></p>
+
+      <button class="primary-btn" id="save-expense">Save Expense</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* ---------- State ---------- */
+      var MONTHLY_BUDGET = 2570;
+      var total = 2450;
+      var isHidden = false;
+      var DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];       // Sun..Sat
+      var week = [20, 42, 68, 35, 95, 128, 54];             // Sun..Sat spend ($)
+      var todayIdx = new Date().getDay();
+
+      var ICONS = {
+        Food: 'restaurant',
+        Groceries: 'shopping_cart',
+        Transport: 'directions_subway',
+        Entertainment: 'movie',
+        Coffee: 'local_cafe',
+        Other: 'receipt_long'
+      };
+
+      var expenses = [
+        { name: 'Groceries', amount: 85,   when: 'Today, 4:15 PM',      cat: 'Groceries' },
+        { name: 'Netflix',   amount: 12,   when: 'Yesterday, 8:00 AM',  cat: 'Entertainment' },
+        { name: 'Transport', amount: 25,   when: 'Oct 22, 6:30 PM',     cat: 'Transport' },
+        { name: 'Coffee & Snack', amount: 6.5, when: 'Oct 22, 10:15 AM', cat: 'Coffee' }
+      ];
+      var showAll = false;
+
+      /* ---------- Helpers ---------- */
+      function $(id) { return document.getElementById(id); }
+
+      function money(n) {
+        return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      var toastTimer;
+      function toast(msg) {
+        var t = $('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2200);
+      }
+
+      function timeLabel() {
+        var d = new Date();
+        return 'Today, ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      }
+
+      /* ---------- Balance ---------- */
+      function renderBalance() {
+        $('balance-display').textContent = isHidden ? '••••••••' : money(total);
+        $('eye-icon').textContent = isHidden ? 'visibility_off' : 'visibility';
+      }
+
+      $('toggle-balance-btn').addEventListener('click', function () {
+        isHidden = !isHidden;
+        renderBalance();
+        renderExpenses();
+      });
+
+      /* ---------- Chart ---------- */
+      function renderChart() {
+        var chart = $('chart');
+        var max = Math.max.apply(null, week);
+        chart.innerHTML = '';
+
+        week.forEach(function (val, i) {
+          var col = document.createElement('div');
+          col.className = 'bar-col' + (i === todayIdx ? ' active' : '');
+
+          var v = document.createElement('span');
+          v.className = 'label-sm bar-value';
+          v.textContent = '$' + Math.round(val);
+
+          var bar = document.createElement('div');
+          bar.className = 'bar';
+          bar.style.height = Math.round(28 + (val / max) * 84) + 'px';
+
+          var d = document.createElement('span');
+          d.className = 'label-sm bar-day';
+          d.textContent = DAYS[i];
+
+          col.appendChild(v);
+          col.appendChild(bar);
+          col.appendChild(d);
+
+          // tap a bar to show its value on touch devices
+          col.addEventListener('click', function () {
+            toast(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][i] +
+                  ': ' + money(val));
+          });
+
+          chart.appendChild(col);
+        });
+
+        // Chart starts Monday in the design; reorder Sun to the end
+        var first = chart.firstElementChild;
+        chart.appendChild(first);
+      }
+
+      /* ---------- Feedback ---------- */
+      function renderFeedback() {
+        var diff = MONTHLY_BUDGET - total;
+        var card = $('budget-card');
+        if (diff >= 0) {
+          card.classList.remove('over');
+          $('budget-badge').textContent = 'Safe Zone';
+          $('budget-sub').textContent = 'Target on track';
+          $('budget-text').textContent = 'You are ' + money(diff).replace('.00', '') + ' under your monthly budget';
+        } else {
+          card.classList.add('over');
+          $('budget-badge').textContent = 'Over Budget';
+          $('budget-sub').textContent = 'Slow down spending';
+          $('budget-text').textContent = 'You are ' + money(Math.abs(diff)).replace('.00', '') + ' over your monthly budget';
+        }
+      }
+
+      /* ---------- Expenses list ---------- */
+      function renderExpenses() {
+        var list = $('expense-list');
+        list.innerHTML = '';
+        var items = showAll ? expenses : expenses.slice(0, 4);
+
+        if (!items.length) {
+          var empty = document.createElement('p');
+          empty.className = 'empty';
+          empty.textContent = 'No expenses yet';
+          list.appendChild(empty);
+          return;
+        }
+
+        items.forEach(function (e, i) {
+          var row = document.createElement('div');
+          row.className = 'expense';
+
+          var left = document.createElement('div');
+          left.className = 'expense-left';
+
+          var icon = document.createElement('div');
+          icon.className = 'expense-icon';
+          var ic = document.createElement('span');
+          ic.className = 'material-symbols-outlined';
+          ic.textContent = ICONS[e.cat] || ICONS.Other;
+          icon.appendChild(ic);
+
+          var info = document.createElement('div');
+          info.className = 'expense-info';
+          var name = document.createElement('span');
+          name.className = 'expense-name truncate';
+          name.textContent = e.name;
+          var when = document.createElement('span');
+          when.className = 'meta-text';
+          when.textContent = e.when;
+          info.appendChild(name);
+          info.appendChild(when);
+
+          left.appendChild(icon);
+          left.appendChild(info);
+
+          var amt = document.createElement('span');
+          amt.className = 'expense-amount';
+          amt.textContent = isHidden ? '-••••' : '-' + money(e.amount);
+
+          row.appendChild(left);
+          row.appendChild(amt);
+          list.appendChild(row);
+
+          if (i < items.length - 1) {
+            var hr = document.createElement('div');
+            hr.className = 'divider';
+            list.appendChild(hr);
+          }
+        });
+
+        $('see-all-btn').firstElementChild.textContent = showAll ? 'Less' : 'All';
+      }
+
+      $('see-all-btn').addEventListener('click', function () {
+        showAll = !showAll;
+        renderExpenses();
+      });
+
+      /* ---------- Add expense modal ---------- */
+      var overlay = $('overlay');
+
+      function openModal() {
+        $('exp-name').value = '';
+        $('exp-amount').value = '';
+        $('exp-category').value = 'Food';
+        $('form-error').textContent = '';
+        overlay.classList.add('open');
+        setTimeout(function () { $('exp-name').focus(); }, 250);
+      }
+
+      function closeModal() {
+        overlay.classList.remove('open');
+      }
+
+      function saveExpense() {
+        var name = $('exp-name').value.trim();
+        var amount = parseFloat($('exp-amount').value);
+        var cat = $('exp-category').value;
+        var err = $('form-error');
+
+        if (!name) { err.textContent = 'Please enter a name.'; return; }
+        if (!isFinite(amount) || amount <= 0) { err.textContent = 'Enter an amount greater than 0.'; return; }
+
+        amount = Math.round(amount * 100) / 100;
+        expenses.unshift({ name: name, amount: amount, when: timeLabel(), cat: cat });
+        total = Math.round((total + amount) * 100) / 100;
+        week[todayIdx] += amount;
+
+        renderBalance();
+        renderChart();
+        renderFeedback();
+        renderExpenses();
+        closeModal();
+        toast('Added ' + money(amount) + ' for ' + name);
+      }
+
+      $('add-expense-btn').addEventListener('click', openModal);
+      $('close-modal').addEventListener('click', closeModal);
+      $('save-expense').addEventListener('click', saveExpense);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'Enter' && overlay.classList.contains('open')) saveExpense();
+      });
+
+      /* ---------- Quick actions ---------- */
+      document.querySelectorAll('.quick-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var action = btn.getAttribute('data-action');
+          if (action === 'add') return openModal();
+          var labels = { category: 'Categories', budget: 'Budget', insights: 'Insights' };
+          toast(labels[action] + ' coming soon');
+        });
+      });
+
+      /* ---------- Notifications ---------- */
+      $('notif-btn').addEventListener('click', function () {
+        $('notif-dot').classList.remove('show');
+        toast('You have no new notifications');
+      });
+
+      /* ---------- Bottom nav ---------- */
+      document.querySelectorAll('.nav-item').forEach(function (item) {
+        item.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.querySelectorAll('.nav-item').forEach(function (n) {
+            n.classList.remove('active');
+            n.removeAttribute('aria-current');
+          });
+          item.classList.add('active');
+          item.setAttribute('aria-current', 'page');
+          var path = item.getAttribute('data-path');
+          if (path !== 'dashboard') toast(item.textContent.trim() + ' page coming soon');
+        });
+      });
+
+      /* ---------- Init ---------- */
+      renderBalance();
+      renderChart();
+      renderFeedback();
+      renderExpenses();
+    })();
+  </script>
+</body>
+</html>
